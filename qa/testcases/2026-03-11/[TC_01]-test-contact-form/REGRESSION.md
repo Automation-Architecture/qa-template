@@ -7,20 +7,18 @@ type: regression
 
 <!-- Leave empty if not related to newest feature. -->
 
-## Precondition
+## Purpose
 
-- *(e.g. Same as happy path; known-good baseline or previous release)*
-- *(add more as needed)*
+Run after any changes to the contact form (UI, validation, API integration) to confirm key paths still work.
 
-## Action
+## Test cases
 
-1. *(e.g. Re-run main flow after code/config change)*
-2. *(e.g. Re-run negative and edge cases)*
-3. *(add more steps as needed)*
+### TC-R1. Re-run core paths
 
-## Verification
+**Scenario:** Given the latest build is deployed, when the contact form is submitted in core happy/edge/negative flows, then behavior matches the expected baseline with no new errors or duplicates.
 
-| Check | Result | Status | Note |
-|-------|--------|--------|------|
-| *(e.g. Happy path still passes)* | | todo / ✅ pass / ❌ fail / ⚠️ blocked | |
-| *(e.g. No regression in guards or fields)* | | todo / ✅ pass / ❌ fail / ⚠️ blocked | |
+| # | Action | Expected | Result | Note |
+|---|--------|----------|--------|------|
+| 1 | Execute TC-P1 (valid submit). | Happy path passes. | todo | |
+| 2 | Execute TC-E2 (double submit prevention). | Duplicate prevention still works. | todo | |
+| 3 | Execute TC-N1 (missing required field). | Validation still blocks submit correctly. | todo | |

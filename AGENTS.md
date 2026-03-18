@@ -10,7 +10,7 @@ For each mode: **check** the right docs, then **create** following the existing 
 
 - When you add or remove an overview-level file (e.g. new date folder, new workflow), update the **Table of Contents** in [README.md](README.md). One OVERVIEW per date folder only; no root testcases/OVERVIEW.
 - Save every PDF, image, or any other asset in the mode's `assets/` folder (`ba/assets/`, `dev/assets/`, `qa/assets/`).
-- After finishing work in a mode, ask the user: "Do you want me to update these changes to the repo so every team can use them?" Only if the user says yes, run git pull then git push (and handle conflicts with a new branch + pull request, telling Dev or Javier to fix).
+- After finishing work in a mode, ask the user: "Do you want me to update these changes to the repo so every team can use them?" Only if the user says yes, run `git pull` then `git push` (and handle conflicts with a new branch + pull request, telling Dev or Javier to fix).
 
 ---
 
@@ -43,11 +43,14 @@ Current folder tree of this template:
         └── <date>/            # e.g. 2026-03-11
             ├── OVERVIEW.md    # Test run summary + Pass/Failed/Block counts
             └── [TC_01]-<name>/
+                ├── QA-OVERVIEW.md   # This workflow’s test summary (Pass/Failed/Block + verdict)
                 ├── HAPPY.md
                 ├── NEGATIVE.md
                 ├── EDGE.md
                 └── REGRESSION.md
 ```
+
+**Test case template (per scenario):** One **Scenario** line (Given/When/Then) + one table: `# | Action | Expected | Result | Note`. Fill Result (✅ pass / ❌ fail / ⚠️ block) and Note when running. Each workflow’s results are summarized in that folder’s **QA-OVERVIEW.md** (Total score, Pass, Failed, Block, Final verdict).
 
 ---
 
@@ -72,7 +75,7 @@ Current folder tree of this template:
 ### Mode 3.1 — Design testcase
 
 - **Check:** Ask for the **BA name** (e.g. Javier). Look up `qa/access/<name>.md` to see that BA's access, credentials, and context.
-- **Create:** Talk with the user to design test cases. Follow `qa/testcases/<date>/OVERVIEW.md` and `qa/testcases/<date>/[TC_01]-name/` (HAPPY.md, NEGATIVE.md, EDGE.md, REGRESSION.md) template.
+- **Create:** Talk with the user to design test cases. Follow `qa/testcases/<date>/OVERVIEW.md` and `qa/testcases/<date>/[TC_01]-name/`: **QA-OVERVIEW.md** (workflow summary), **HAPPY.md**, **NEGATIVE.md**, **EDGE.md**, **REGRESSION.md**. Per-scenario format: one Scenario line (Given/When/Then) + table `# | Action | Expected | Result | Note`.
 - Track per-person access + notes in `qa/access/<name>.md` when relevant.
 - Save any PDF, diagram, or asset used in `qa/assets/`.
 
@@ -81,11 +84,12 @@ Current folder tree of this template:
 Use this when the user has **finished running** a test and wants to submit the result.
 
 - **Check:** Ask the user **which test case** they want to update (e.g. `qa/testcases/2026-03-11/[TC_01]-test-contact-form/HAPPY.md`).
-- **Understand context:** Read that file and count **Preconditions**, **Actions**, and **Verification** table rows (each "Check" row). Use this to know how many items to ask about.
-- **Gather result:** For each verification check (and any key actions if needed), ask the user: pass / fail / blocked? User can answer and attach screenshots. Save screenshots to `qa/assets/` and link them in the test file.
+- **Understand context:** Read that file and count table rows (each step row). Use this to know how many items to ask about.
+- **Gather result:** For each step, ask the user: pass / fail / blocked? User can answer and attach screenshots. Save screenshots to `qa/assets/` and link them in the test file.
 - **Update files:**
-  1. Update the test file (e.g. HAPPY.md): set each Check row's **Result** and **Status** (✅ pass / ❌ fail / ⚠️ blocked), add **Note** with screenshot link when provided. Set `status` in frontmatter (e.g. `pass` / `fail` / `blocked`).
-  2. Update the date folder's **OVERVIEW.md**: adjust the **Total score** table (✅ Pass, ❌ Failed, ⚠️ Block counts) and move or add the test link under the right section (Pass / Failed / Block).
+  1. Update the test file (e.g. HAPPY.md): set each row's **Result** (✅ pass / ❌ fail / ⚠️ block) and **Note** (screenshot link, bug ID). Set `status` in frontmatter if needed.
+  2. Update that workflow's **QA-OVERVIEW.md** (same folder): Total score table, Pass / Failed / Block lists, and Final verdict from the run.
+  3. Update the date folder's **OVERVIEW.md**: adjust Total score and Pass/Failed/Block sections for the global run.
 
 ---
 
@@ -96,4 +100,4 @@ Use this when the user has **finished running** a test and wants to submit the r
 | 1      | PM / CEO / Sales | ba/requirements/             |
 | 2      | Dev              | dev/workflows/<feature>/      |
 | 3.1    | Tester / QA      | qa/testcases/<date>/ (design) |
-| 3.2    | Tester / QA      | Update test file + OVERVIEW.md (submit result) |
+| 3.2    | Tester / QA      | Update test file + date OVERVIEW.md (result) |

@@ -1,6 +1,7 @@
 ---
 
 ## title: Happy path
+
 updated_at: 2026-03-11T00:00:00Z
 status: todo
 type: happy
@@ -12,19 +13,18 @@ type: happy
 - *(e.g. No duplicate or cooldown blocking this run)*
 - *(add more as needed for this scenario)*
 
-## Action
+## Test cases
 
-1. *(e.g. Trigger the workflow with valid payload)*
-2. *(e.g. Wait for delay or mock time if needed)*
-3. *(e.g. Verify outbound SMS/call and HubSpot fields updated)*
-4. *(add more steps as needed)*
+### TC-P1. Submit valid contact form → success shown → lead created (or sent)
 
-## Verification
+**Scenario:** Given the user is on the contact page, when they submit a valid form payload, then the UI confirms success and the backend receives/creates the lead without errors.
 
 
-| Check                              | Result | Status                              | Note                                   |
-| ---------------------------------- | ------ | ----------------------------------- | -------------------------------------- |
-| *(e.g. Webhook accepted, no skip)* |        | todo / ✅ pass / ❌ fail / ⚠️ blocked | [screenshot](qa/assets/screenshot.png) |
-| *(e.g. Expected field set in CRM)* |        | todo / ✅ pass / ❌ fail / ⚠️ blocked |                                        |
+| #   | Action                                                        | Expected                                                                     | Result | Note                            |
+| --- | ------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------ | ------------------------------- |
+| 1   | Open the contact form page.                                   | Form loads with all required fields visible.                                 | todo   |                                 |
+| 2   | Fill fields with valid data (name, email, message, etc.).     | Client-side validation allows submit.                                        | todo   |                                 |
+| 3   | Click **Submit**.                                             | Success state is shown (toast/message) and no error banner appears.          | todo   |                                 |
+| 4   | Verify backend/CRM/email side-effect (whichever is the spec). | Exactly 1 lead/contact is created/sent; payload values match; no duplicates. | todo   | Link logs / screenshot / ticket |
 
 
