@@ -1,22 +1,25 @@
 # AGENTS.md — AI setup for this QA template
 
-**Tag or reference only this file.** At the start, ask: **Are you PM/CEO/Sales, Dev, or QA?** Then run that mode only. Do not suggest the next mode; if the user wants another mode, they tag this file again and pick.
+**On open:** Ask: *PM/CEO/Sales, Dev, or QA?* Run **only** that mode. Do not suggest switching modes; user tags this file again to pick another.
 
-For each mode: **check** the right docs, then **create** following the existing template files in this repo.
+**Each mode:** Read the paths below, then **create or update** files so they match existing templates in this repo.
 
----
-
-## Rules
-
-- When you add or remove an overview-level file (e.g. new date folder, new workflow), update the **Table of Contents** in [README.md](README.md). One OVERVIEW per date folder only; no root testcases/OVERVIEW.
-- Save every PDF, image, or any other asset in the mode's `assets/` folder (`ba/assets/`, `dev/assets/`, `qa/assets/`).
-- After finishing work in a mode, ask the user: "Do you want me to update these changes to the repo so every team can use them?" Only if the user says yes, run `git pull` then `git push` (and handle conflicts with a new branch + pull request, telling Dev or Javier to fix).
+**Interactive asks:** When you need the user to **choose** (PM / Dev / QA, or QA **3.1 / 3.2**, or similar multiple-choice), **prefer** a host-provided **question / picker tool** if this session has one (e.g. `AskUserQuestion`, multi-select modal, or whatever the IDE exposes)—so the user gets a popup or structured choices instead of only free-form chat. **If no such tool is available**, fall back to a short numbered list and wait for the reply.
 
 ---
 
-## Project structure
+## Global rules
 
-Current folder tree of this template:
+| Rule | Detail |
+| ---- | ------ |
+| README TOC | Add/remove entries in [README.md](README.md) when you add or remove overview-level items (e.g. new `qa/testcases/<date>/`, new workflow). |
+| QA date folders | One `.md` file per feature under `qa/testcases/<date>/`. No `OVERVIEW.md`, no subfolders. |
+| Assets | PDFs/images → `ba/assets/`, `dev/assets/`, or `qa/assets/` by mode. |
+| Git push | After work, ask: *"Do you want me to update these changes to the repo so every team can use them?"* Only if **yes**: `git pull` then `git push`. On conflict: new branch + PR; tell Dev or Javier. |
+
+---
+
+## Repo layout (where files live)
 
 ```
 .
@@ -36,68 +39,194 @@ Current folder tree of this template:
 │           └── OVERVIEW.md
 └── qa/
     ├── access/
-    │   └── <name>.md          # e.g. javier.md — per-BA access, credentials, quick links
+    │   └── <name>.md          # per-person access/notes/quick links
     ├── assets/
     │   └── README.md
     └── testcases/
-        └── <date>/            # e.g. 2026-03-11
-            ├── OVERVIEW.md    # Test run summary + Pass/Failed/Block counts
-            └── [TC_01]-<name>/
-                ├── QA-OVERVIEW.md   # This workflow’s test summary (Pass/Failed/Block + verdict)
-                ├── HAPPY.md
-                ├── NEGATIVE.md
-                ├── EDGE.md
-                └── REGRESSION.md
+        ├── _template-testcase-feature.md   # copy this to start a new test file
+        └── <date>/            # e.g. 2026-04-10
+            └── <feature-name>.md   # single file per feature — all sections inside
 ```
 
-**Test case template (per scenario):** One **Scenario** line (Given/When/Then) + one table: `# | Action | Expected | Result | Note`. Fill Result (✅ pass / ❌ fail / ⚠️ block) and Note when running. Each workflow’s results are summarized in that folder’s **QA-OVERVIEW.md** (Total score, Pass, Failed, Block, Final verdict).
+---
+
+## QA conventions (Modes 3.1–3.2)
+
+| Topic | Convention |
+| ----- | ---------- |
+| Severity | `P1` Blocker · `P2` Critical · `P3` Minor |
+| Scenario IDs | Happy `TC-H`, Negative `TC-N`, Edge `TC-E`, Regression `TC-R` — numbered within each section (TC-H1, TC-H2, etc.) |
+| Per scenario | `**Severity:**` + `**Scenario:**` (Given/When/Then) + list of steps |
+| Step format | One step = `- **Step N** — <title>` with four sub-lines: `Action`, `Expected`, `Result` (PASS / FAIL / BLOCK), `Note` (always present, leave blank if nothing to add) |
+| Atomic steps | One action per step. Short and direct — no combining two actions in one step. |
+| Result values | `PASS` · `FAIL` · `BLOCK` (blocked by a previous failure or missing dependency) |
+| File language | English throughout |
+| Evidence | Store screenshots/files under `qa/assets/`; link from the Note line of the relevant step |
 
 ---
 
 ## Mode 1: PM / CEO / Sales
 
-- **Check:** Ask for requirements (or extract from PDF). If not enough, ask again.
-- **Create:** Follow `ba/requirements/OVERVIEW.md` and `ba/requirements/CHANGELOG.md` template.
-- Save any PDF, diagram, or asset used in `ba/assets/`.
-
----
+- **Check:** Requirements (or PDF). Re-ask if unclear.
+- **Create:** `ba/requirements/OVERVIEW.md` + `CHANGELOG.md`; extras in `ba/assets/`.
 
 ## Mode 2: Dev
 
-- **Check:** Ask for workflows, tech stack, ideas (or extract from PDF). If not enough, ask again.
-- **Create:** Follow `dev/workflows/<feature>/OVERVIEW.md` template.
-- Save any PDF, diagram, or asset used in `dev/assets/`.
-
----
+- **Check:** Workflows, stack, ideas (or PDF). Re-ask if unclear.
+- **Create:** `dev/workflows/<feature>/OVERVIEW.md`; extras in `dev/assets/`.
 
 ## Mode 3: Tester / QA
 
-### Mode 3.1 — Design testcase
+### 3.1 — Create test file
 
-- **Check:** Ask for the **BA name** (e.g. Javier). Look up `qa/access/<name>.md` to see that BA's access, credentials, and context.
-- **Create:** Talk with the user to design test cases. Follow `qa/testcases/<date>/OVERVIEW.md` and `qa/testcases/<date>/[TC_01]-name/`: **QA-OVERVIEW.md** (workflow summary), **HAPPY.md**, **NEGATIVE.md**, **EDGE.md**, **REGRESSION.md**. Per-scenario format: one Scenario line (Given/When/Then) + table `# | Action | Expected | Result | Note`.
-- Track per-person access + notes in `qa/access/<name>.md` when relevant.
-- Save any PDF, diagram, or asset used in `qa/assets/`.
+**Inputs (user will tag or provide):**
 
-### Mode 3.2 — Submit test result
+- BA requirements: `ba/requirements/OVERVIEW.md` (+ `CHANGELOG.md` if available)
+- Dev feature: `dev/workflows/<feature>/OVERVIEW.md`
 
-Use this when the user has **finished running** a test and wants to submit the result.
+**Steps:**
 
-- **Check:** Ask the user **which test case** they want to update (e.g. `qa/testcases/2026-03-11/[TC_01]-test-contact-form/HAPPY.md`).
-- **Understand context:** Read that file and count table rows (each step row). Use this to know how many items to ask about.
-- **Gather result:** For each step, ask the user: pass / fail / blocked? User can answer and attach screenshots. Save screenshots to `qa/assets/` and link them in the test file.
-- **Update files:**
-  1. Update the test file (e.g. HAPPY.md): set each row's **Result** (✅ pass / ❌ fail / ⚠️ block) and **Note** (screenshot link, bug ID). Set `status` in frontmatter if needed.
-  2. Update that workflow's **QA-OVERVIEW.md** (same folder): Total score table, Pass / Failed / Block lists, and Final verdict from the run.
-  3. Update the date folder's **OVERVIEW.md**: adjust Total score and Pass/Failed/Block sections for the global run.
+1. Confirm the date folder to use: `qa/testcases/<date>/`. Create if it does not exist.
+2. Read the tagged BA and dev files.
+3. Copy `qa/testcases/_template-testcase-feature.md` → `qa/testcases/<date>/<feature-name>.md` and fill in content.
+
+**File structure (4 sections, in order):**
+
+```
+# <Feature Name>
+
+## 1. Overview
+<endpoint or trigger> + one sentence describing what the feature does.
+
+## 2. Loom
+Default recording message + blank link placeholder.
+
+## 3. Test Cases
+
+### Happy — TC-H
+### Negative — TC-N
+### Edge — TC-E
+### Regression — TC-R
+
+## 4. Report
+Pass/Failed/Block score table + Pass / Failed / Block / Final verdict lists.
+Required fixes numbered list when verdict is Not ready.
+```
+
+**Loom section (Section 2, always present, link filled after recording):**
+
+```markdown
+## 2. Loom
+
+**Recording:** This video was recorded live while filling in this test case and running each step. Watch it for a full walkthrough of what happened during the session.
+
+<!-- Paste Loom link here -->
+```
+
+**Step format (use for every step, no exceptions):**
+
+```markdown
+- **Step N** — <short title>
+  - Action: <what to do>
+  - Expected: <what should happen>
+  - Result: PASS / FAIL / BLOCK
+  - Note:
+```
+
+**Writing style for steps — keep everything short and direct:**
+
+| Field | Rule | Good | Avoid |
+|-------|------|------|-------|
+| Step title | Verb + object, ≤ 4 words | `Complete payment` | `Complete the payment flow successfully` |
+| Action | Start with a verb, one action only | `Click Submit` | `Click the Submit button to confirm and send the form` |
+| Expected | State the outcome, not the process | `Redirected to will form` | `User should be redirected back to the Generate Will form page` |
+| Note | Only bug detail or warning — blank if nothing | `Missing doc link for plan 499` | `I noticed that the document link is missing` |
+
+**Report section format:**
+
+```markdown
+| ✅ Pass | ❌ Failed | ⚠️ Block |
+|---------|----------|----------|
+| X       | X        | X        |
+
+### Pass
+- <scenario ID> — PASS steps: X of Y
+
+### Failed
+- <scenario ID> step N — <short bug statement>
+
+### Block
+- <scenario ID> — <reason>
+
+### Final verdict
+<one sentence: Ready / Not ready and why>
+
+**Required fixes before release:**
+1. <scenario step> — <what to fix>
+```
+
+**Severity in Final verdict:** Any P1 FAIL or BLOCK → Not ready. Only P2/P3 → Ready with follow-ups listed.
+
+---
+
+### 3.2 — Sync JIRA
+
+**GitHub blob URL (always compute, never guess):**
+
+1. `git remote get-url origin` → normalize to `https://github.com/<owner>/<repo>`
+2. `git branch --show-current` → branch name
+3. File URL: `https://github.com/<owner>/<repo>/blob/<branch>/<repo-relative-path>`
+
+**Jira note:** Never use bare `Source link: <url>` on its own line — Jira renders it as a giant heading. Always wrap URLs inside a markdown list item with a label.
+
+---
+
+**Parent ticket**
+
+- **Title:** `QA — <Feature Name>`
+- **Description:** Short bullet list — what the feature does and what passing QA means. 3–5 bullets max. No verbatim file content here.
+
+Example:
+
+```markdown
+- Handles contact form submission from UI to backend
+- QA covers: valid submit, missing fields, backend error, optional fields, duplicate prevention
+- Passing QA means: all P1 scenarios pass and no BLOCK items remain
+```
+
+---
+
+**Subtask**
+
+- **Title:** `QA Session — <Feature Name> — <YYYY-MM-DD>`
+- **Body:**
+
+```markdown
+- [QA file — <feature-name>.md](<GitHub blob URL of the QA file>)
+
+---
+
+**Recording**
+
+This video was recorded live while filling in this test case and running each step. Watch it for a full walkthrough of what happened during the session.
+<paste Loom link from Section 2 of the QA file>
+
+---
+
+**Report**
+
+<paste Section 4 Report of the QA file verbatim>
+```
+
+**Sync rule:** If the parent or subtask already exists, update it. If missing, create it.
 
 ---
 
 ## Summary
 
-| Mode   | Who              | Output                        |
-| ------ | ---------------- | ----------------------------- |
-| 1      | PM / CEO / Sales | ba/requirements/             |
-| 2      | Dev              | dev/workflows/<feature>/      |
-| 3.1    | Tester / QA      | qa/testcases/<date>/ (design) |
-| 3.2    | Tester / QA      | Update test file + date OVERVIEW.md (result) |
+| Mode | Who | Output |
+| ---- | --- | ------ |
+| 1 | PM / CEO / Sales | `ba/requirements/` |
+| 2 | Dev | `dev/workflows/<feature>/` |
+| 3.1 | QA | `qa/testcases/<date>/<feature-name>.md` (single file, all sections) |
+| 3.2 | QA | Jira parent `QA — <feature>` + subtask `QA Session — <feature> — <date>` |

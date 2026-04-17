@@ -20,7 +20,7 @@ updated_at: 2026-03-12T00:00:00Z
 - [dev/assets/README.md](dev/assets/README.md)
 - [qa/testcases/_template-case.md](qa/testcases/_template-case.md)
 - [qa/testcases/2026-03-11/OVERVIEW.md](qa/testcases/2026-03-11/OVERVIEW.md)
-- [qa/testcases/2026-03-11/[TC_01]-test-contact-form/QA-OVERVIEW.md](qa/testcases/2026-03-11/%5BTC_01%5D-test-contact-form/QA-OVERVIEW.md)
+- [qa/testcases/2026-03-11/[TC_01]-test-contact-form/QA-OVERVIEW.md](qa/testcases/2026-03-11/test-contact-form/QA-OVERVIEW.md)
 - [qa/access/javier.md](qa/access/javier.md)
 - [qa/assets/README.md](qa/assets/README.md)
 
