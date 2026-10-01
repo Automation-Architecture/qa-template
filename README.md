@@ -1,6 +1,6 @@
 ---
 title: QA documentation template
-updated_at: 2026-03-12T00:00:00Z
+updated_at: 2026-10-01T00:00:00Z
 ---
 
 # QA documentation template
@@ -23,6 +23,7 @@ updated_at: 2026-03-12T00:00:00Z
 - [qa/testcases/2026-03-11/[TC_01]-test-contact-form/QA-OVERVIEW.md](qa/testcases/2026-03-11/test-contact-form/QA-OVERVIEW.md)
 - [qa/access/javier.md](qa/access/javier.md)
 - [qa/assets/README.md](qa/assets/README.md)
+- [.github/workflows/codex-auto-request.yml](.github/workflows/codex-auto-request.yml)
 
 ---
 
