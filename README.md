@@ -41,7 +41,7 @@ updated_at: 2026-10-01T00:00:00Z
 
 ## Review and merge automation
 
-This repo carries no per-repo review or merge workflow. Codex review requests come from the central sweep [`codex-review-sweep.yml`](https://github.com/Automation-Architecture/.github/blob/main/.github/workflows/codex-review-sweep.yml), and Markdown-only PRs are merged centrally after Codex by [`doc-auto-merge-sweep.yml`](https://github.com/Automation-Architecture/.github/blob/main/.github/workflows/doc-auto-merge-sweep.yml), both in `Automation-Architecture/.github`.
+This repo carries no per-repo review or merge workflow. Codex review requests come from the central sweep [`codex-review-sweep.yml`](https://github.com/Automation-Architecture/.github/blob/main/.github/workflows/codex-review-sweep.yml), and green Markdown-only PRs are merged centrally by [`doc-auto-merge-sweep.yml`](https://github.com/Automation-Architecture/.github/blob/main/.github/workflows/doc-auto-merge-sweep.yml), both in `Automation-Architecture/.github`. The sweep merges after Codex reviews the head, or after 15 minutes with no Codex activity; it never merges with an open Codex P0/P1, and holds a PR with an open Codex P2/P3 thread until a person resolves it.
 
 ## AI setup
 
