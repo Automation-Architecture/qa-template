@@ -23,7 +23,6 @@ updated_at: 2026-10-01T00:00:00Z
 - [qa/testcases/2026-03-11/[TC_01]-test-contact-form/QA-OVERVIEW.md](qa/testcases/2026-03-11/test-contact-form/QA-OVERVIEW.md)
 - [qa/access/javier.md](qa/access/javier.md)
 - [qa/assets/README.md](qa/assets/README.md)
-- [.github/workflows/codex-auto-request.yml](.github/workflows/codex-auto-request.yml)
 
 ---
 
@@ -39,6 +38,10 @@ updated_at: 2026-10-01T00:00:00Z
   - **qa/testcases/** — one OVERVIEW.md per date folder only (at root of that date, e.g. `qa/testcases/2026-03-11/OVERVIEW.md`); test folders `[TC_01]-name` with HAPPY.md, NEGATIVE.md, EDGE.md, REGRESSION.md
   - **qa/access/** — per-person QA notes (access, quick links, current testing)
   - **qa/assets/** — attachments for QA docs (index in `qa/assets/README.md`)
+
+## Review and merge automation
+
+This repo carries no per-repo review or merge workflow. Codex review requests come from the central sweep [`codex-review-sweep.yml`](https://github.com/Automation-Architecture/.github/blob/main/.github/workflows/codex-review-sweep.yml), and Markdown-only PRs are merged centrally after Codex by [`doc-auto-merge-sweep.yml`](https://github.com/Automation-Architecture/.github/blob/main/.github/workflows/doc-auto-merge-sweep.yml), both in `Automation-Architecture/.github`.
 
 ## AI setup
 
