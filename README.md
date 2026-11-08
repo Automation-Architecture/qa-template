@@ -13,6 +13,7 @@ updated_at: 2026-10-01T00:00:00Z
 
 - [README.md](README.md)
 - [AGENTS.md](AGENTS.md)
+- [CLAUDE.md](CLAUDE.md): one line, `@AGENTS.md`, so Claude Code loads AGENTS.md
 - [ba/requirements/OVERVIEW.md](ba/requirements/OVERVIEW.md)
 - [ba/requirements/CHANGELOG.md](ba/requirements/CHANGELOG.md)
 - [ba/assets/README.md](ba/assets/README.md)
